@@ -105,3 +105,4 @@ foreach ($result as $row) {
     echo '<h2>' . utf8_encode($row['topic']) . '</h2>';
     echo fixhtml(utf8_encode($row['message']));
 }
+htmlstop();
