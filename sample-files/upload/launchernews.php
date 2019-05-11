@@ -105,4 +105,5 @@ foreach ($result as $row) {
     echo '<h2>' . utf8_encode($row['topic']) . '</h2>';
     echo fixhtml(utf8_encode($row['message']));
 }
+echo '<hr><div style="text-align: center">'.mklink('https://minecraft-kids.online/forum/board/2-ank%C3%BCndigungen-news/', 'Alle News').'</div>';
 htmlstop();
