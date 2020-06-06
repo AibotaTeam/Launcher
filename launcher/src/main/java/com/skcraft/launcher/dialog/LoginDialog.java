@@ -97,24 +97,22 @@ public class LoginDialog extends JDialog {
         loginButton.setFont(loginButton.getFont().deriveFont(Font.BOLD));
 
         formPanel.addRow(new JLabel(SharedLocale.tr("login.idEmail")), idCombo);
-        formPanel.addRow(new JLabel(SharedLocale.tr("login.password")), passwordText);
+        //formPanel.addRow(new JLabel(SharedLocale.tr("login.password")), passwordText);
         formPanel.addRow(new JLabel(), rememberIdCheck);
-        formPanel.addRow(new JLabel(), rememberPassCheck);
+        //formPanel.addRow(new JLabel(), rememberPassCheck);
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(26, 13, 13, 13));
 
-        if (launcher.getConfig().isOfflineEnabled()) {
-            buttonsPanel.addElement(offlineButton);
-            buttonsPanel.addElement(Box.createHorizontalStrut(2));
-        }
-        buttonsPanel.addElement(recoverButton);
+        //buttonsPanel.addElement(recoverButton);
         buttonsPanel.addGlue();
-        buttonsPanel.addElement(loginButton);
+        //buttonsPanel.addElement(loginButton);
         buttonsPanel.addElement(cancelButton);
+        buttonsPanel.addElement(offlineButton);
+        buttonsPanel.addElement(Box.createHorizontalStrut(2));
 
         add(formPanel, BorderLayout.CENTER);
         add(buttonsPanel, BorderLayout.SOUTH);
 
-        getRootPane().setDefaultButton(loginButton);
+        getRootPane().setDefaultButton(offlineButton);
 
         passwordText.setComponentPopupMenu(TextFieldPopupMenu.INSTANCE);
 
@@ -145,7 +143,11 @@ public class LoginDialog extends JDialog {
         offlineButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setResult(new OfflineSession(launcher.getProperties().getProperty("offlinePlayerName")));
+                Object selected = idCombo.getSelectedItem();
+                Account account = (Account) selected;
+                accounts.add(account);
+                Persistence.commitAndForget(accounts);
+                setResult(new OfflineSession(account.id));
                 removeListeners();
                 dispose();
             }

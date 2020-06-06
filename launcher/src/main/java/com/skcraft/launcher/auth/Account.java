@@ -20,7 +20,7 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Account implements Comparable<Account> {
 
-    private String id;
+    public String id;
     private String password;
     private Date lastUsed;
 

@@ -27,7 +27,7 @@ subprojects {
     apply plugin: 'maven'
 
     group = 'com.skcraft'
-    version = '0.2.0'
+    version = '1.0.0'
 
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
@@ -42,5 +42,11 @@ subprojects {
         tasks.withType(Javadoc) {
             options.addStringOption('Xdoclint:none', '-quiet')
         }
+    }
+
+    compileJava.options.encoding = 'UTF-8'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
     }
 }
