@@ -14,6 +14,7 @@ import com.skcraft.launcher.Instance;
 import com.skcraft.launcher.LauncherUtils;
 import com.skcraft.launcher.model.minecraft.VersionManifest;
 import com.skcraft.launcher.install.Installer;
+import com.skcraft.launcher.util.BmclSourceUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -51,7 +52,7 @@ public class Manifest extends BaseManifest {
         }
 
         try {
-            return LauncherUtils.concat(baseUrl, Strings.nullToEmpty(getLibrariesLocation()) + "/");
+            return LauncherUtils.concat(baseUrl,  BmclSourceUtil.replaceMojangUrlToBmclUrl(Strings.nullToEmpty(getLibrariesLocation())) + "/");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

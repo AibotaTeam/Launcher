@@ -8,6 +8,7 @@ import java.net.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.skcraft.launcher.util.BmclSourceUtil;
 import com.skcraft.launcher.util.HttpRequest;
 
 import lombok.Data;
@@ -21,6 +22,6 @@ public class VersionAssetIndex {
     // note that naming this wrapper 'getURL' will irritate the JSON parser, resulting in url = null
     @JsonIgnore
     public URL getAssetIndexURL() {
-        return (url == null || url.isEmpty()) ? null : HttpRequest.url(url);
+        return (url == null || url.isEmpty()) ? null : HttpRequest.url(BmclSourceUtil.replaceMojangUrlToBmclUrl(url));
     }
 }

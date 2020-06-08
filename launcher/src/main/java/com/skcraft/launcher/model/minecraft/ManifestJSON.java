@@ -4,6 +4,7 @@
  */
 package com.skcraft.launcher.model.minecraft;
 
+import com.skcraft.launcher.util.BmclSourceUtil;
 import lombok.Data;
 
 import java.net.URL;
@@ -28,7 +29,9 @@ public class ManifestJSON {
                     .asJson(ManifestJSON.class);
             for(MinecraftVersion v : json.versions) {
                 if(v.getId().equalsIgnoreCase(version)) {
-                    return HttpRequest.url(v.getUrl());
+                    String url = v.getUrl();
+                    url = BmclSourceUtil.replaceMojangUrlToBmclUrl(url);
+                    return HttpRequest.url(url);
                 }
             }
         } catch (Exception e) {

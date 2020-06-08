@@ -148,6 +148,7 @@ public class Updater extends BaseUpdater implements Callable<Instance>, Progress
         log.info("Enumerating libraries to download...");
 
         URL url = manifest.getLibrariesUrl();
+
         if (url != null) {
             log.info("Added library source: " + url);
             librarySources.add(url);
