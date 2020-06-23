@@ -5,8 +5,8 @@ package com.skcraft.launcher.util;
  */
 public class BmclSourceUtil {
     public static String replaceMojangUrlToBmclUrl(String content) {
-        String result = content.replace("https://launchermeta.mojang.com/", "https://bmclapi2.bangbang93.com/");
-        result = result.replace("https://launcher.mojang.com/", "https://bmclapi2.bangbang93.com/");
+        String result = content.replace("https://launchermeta.mojang.com/", "https://download.mcbbs.net/");
+        result = result.replace("https://launcher.mojang.com/", "https://download.mcbbs.net/");
         return result;
     }
 }

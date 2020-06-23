@@ -109,8 +109,7 @@ public class HttpRequest implements Closeable, ProgressObservable {
             if (conn != null) {
                 throw new IllegalArgumentException("Connection already executed");
             }
-
-             */
+            */
 
             conn = (HttpURLConnection) reformat(url).openConnection();
             conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Java) SKMCLauncher");
@@ -132,15 +131,14 @@ public class HttpRequest implements Closeable, ProgressObservable {
 
             conn.connect();
 
-            //LogUtil.recordLog(url + " - " + conn.getResponseMessage());
-            //if(conn.getHeaderField("Location")!=null)
-                //LogUtil.recordLog(url + " - " + conn.getHeaderField("Location"));
+            LogUtil.recordLog(url + " - " + conn.getResponseMessage());
 
-            // If this call has response code 302, then we need to call api again from the redirected location
-            if(conn.getResponseCode()==302) {
+            // If this call has redirect location, then we need to call api again from the redirected location
+            if(conn.getHeaderField("Location")!=null) {
+                LogUtil.recordLog("Found Location: " + url + " -> " + conn.getHeaderField("Location"));
                 url = HttpRequest.url(conn.getHeaderField("Location"));
-                close();
                 successful = true;
+                close();
                 return execute();
             }
 
@@ -150,15 +148,15 @@ public class HttpRequest implements Closeable, ProgressObservable {
                 out.flush();
                 out.close();
             }
-            //LogUtil.recordLog(url + " - " + conn.getResponseMessage());
+            LogUtil.recordLog(url + " - " + conn.getResponseMessage());
             inputStream = conn.getResponseCode() == HttpURLConnection.HTTP_OK ?
                     conn.getInputStream() : conn.getErrorStream();
-            //LogUtil.recordLog("Response code is: " + conn.getResponseCode());
-            //LogUtil.recordLog("Response is 200: " + (conn.getResponseCode() == HttpURLConnection.HTTP_OK));
+            LogUtil.recordLog("Response code is: " + conn.getResponseCode());
+            LogUtil.recordLog("Response is 200: " + (conn.getResponseCode() == HttpURLConnection.HTTP_OK));
             successful = true;
         } finally {
             if (!successful) {
-                //LogUtil.recordLog("Not successful");
+                LogUtil.recordLog("Not successful");
                 close();
             }
         }
@@ -175,7 +173,7 @@ public class HttpRequest implements Closeable, ProgressObservable {
      */
     public HttpRequest expectResponseCode(int... codes) throws IOException {
         int responseCode = getResponseCode();
-        //LogUtil.recordLog("In expectResponseCode, Response code is: " + responseCode);
+        LogUtil.recordLog("In expectResponseCode, Response code is: " + responseCode);
         for (int code : codes) {
             if (code == responseCode) {
                 return this;

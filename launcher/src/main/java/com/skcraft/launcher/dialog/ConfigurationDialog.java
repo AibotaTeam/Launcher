@@ -10,6 +10,7 @@ import com.skcraft.launcher.Configuration;
 import com.skcraft.launcher.Launcher;
 import com.skcraft.launcher.swing.*;
 import com.skcraft.launcher.persistence.Persistence;
+import com.skcraft.launcher.util.LogUtil;
 import com.skcraft.launcher.util.SharedLocale;
 import lombok.NonNull;
 
@@ -50,6 +51,7 @@ public class ConfigurationDialog extends JDialog {
     private final JButton cancelButton = new JButton(SharedLocale.tr("button.cancel"));
     private final JButton aboutButton = new JButton(SharedLocale.tr("options.about"));
     private final JButton logButton = new JButton(SharedLocale.tr("options.launcherConsole"));
+    private final JButton recordLogButton = new JButton(SharedLocale.tr("options.recordLogButton"));
 
     /**
      * Create a new configuration dialog.
@@ -112,6 +114,7 @@ public class ConfigurationDialog extends JDialog {
         tabbedPane.addTab(SharedLocale.tr("options.proxyTab"), SwingHelper.alignTabbedPane(proxySettingsPanel));
 
         advancedPanel.addRow(new JLabel(SharedLocale.tr("options.gameKey")), gameKeyText);
+        advancedPanel.addRow(new JLabel(SharedLocale.tr("options.recordLogText")), recordLogButton);
         SwingHelper.removeOpaqueness(advancedPanel);
         tabbedPane.addTab(SharedLocale.tr("options.advancedTab"), SwingHelper.alignTabbedPane(advancedPanel));
 
@@ -148,6 +151,13 @@ public class ConfigurationDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ConsoleFrame.showMessages();
+            }
+        });
+
+        recordLogButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LogUtil.recordLog = true;
             }
         });
     }
